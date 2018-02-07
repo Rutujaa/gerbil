@@ -261,7 +261,6 @@ public enum ExperimentType implements Describable {
             }
             case KE:
             }
-            }
         }
         case C2KB: {
             return type == C2KB;
