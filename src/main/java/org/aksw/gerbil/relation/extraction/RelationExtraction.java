@@ -30,7 +30,6 @@ import com.hp.hpl.jena.vocabulary.RDF;
  */
 public class RelationExtraction implements IRelationExtraction {
 
-	//interface is blueprint and class is implementation.
 	/**
 	 * this method takes a Turtle input file, identifies the entities and their relation and provides an output ttl file defining the relation
 	 * @param inputFile
