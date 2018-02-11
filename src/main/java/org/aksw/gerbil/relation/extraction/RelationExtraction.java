@@ -24,32 +24,40 @@ import com.hp.hpl.jena.rdf.model.StmtIterator;
 import com.hp.hpl.jena.vocabulary.RDF;
 
 /**
+ * RelationExtraction class is used to identify the relation between two entities provided in an input ttl file
  * @author Mohit Mahajan
  *
  */
 public class RelationExtraction implements IRelationExtraction {
 
-
+	//interface is blueprint and class is implementation.
 	/**
 	 * this method takes a Turtle input file, identifies the entities and their relation and provides an output ttl file defining the relation
+	 * @param inputFile
+	 * @throws FileNotFoundException
 	 */
-	public void  extractRelation(String inputFile) throws FileNotFoundException {
-		String sentence = "";
+	public void  extractRelation(String inputFile) throws FileNotFoundException {	 
+		String sentence = "";			
 		String sentenceURI = "";
 		boolean hasRelation = false;
 		String relation = "";
+		//Read the input file
+		Model model = RDFDataMgr.loadModel(inputFile);	
 
-		Model model = RDFDataMgr.loadModel(inputFile);
-
+		//Set of resource using linked has set to avoid duplicates and to maintain insertion order
 		Set<Resource> resourceSet = new LinkedHashSet<Resource>();
 
+		//entityMap to keep record of entities with their begin and end index
 		Map<String, List<Integer>> entityMap = new LinkedHashMap<String, List<Integer>>();
 
+		//list of related entities discovered
 		List<String> relatedEntities = new ArrayList<String>();
 
 		resourceSet = getResources(resourceSet, model);
 
-		for (Resource resource : resourceSet) {
+		//filling entityMap with entity name mapped with their begin and end index
+		for (Resource resource : resourceSet) {			 
+
 			if (null != resource.getProperty(NIF.anchorOf)) {
 				String entity = resource.getProperty(NIF.anchorOf).getString();
 				Integer beginIndex = resource.getProperty(NIF.beginIndex).getInt();
@@ -64,7 +72,8 @@ public class RelationExtraction implements IRelationExtraction {
 			}
 		}
 
-		Iterator<String> entityIterator = entityMap.keySet().iterator();
+		//iterating over entityMap to check the relation between two entities 
+		Iterator<String> entityIterator = entityMap.keySet().iterator(); 
 		String lastEntity = "";
 		String entity1 = "";
 		String entity2 = "";
@@ -97,29 +106,38 @@ public class RelationExtraction implements IRelationExtraction {
 
 
 		if (hasRelation) {
-			generateOutput(sentenceURI, relation, relatedEntities);
+			generateOutput(sentenceURI, relation, relatedEntities);	
 		}
 	}
 
 	/**
 	 * extract list of statements from model and iterate over it to get resource list
+	 * @param resourceSet
+	 * @param model
+	 * @return Set<Resource>
 	 */
-	public Set<Resource> getResources(Set<Resource> resourceSet, Model model){
-		StmtIterator iter = model.listStatements();
-		while (iter.hasNext()) {
-			Statement stmt = iter.nextStatement(); 
-			Resource subject = stmt.getSubject(); 
-			Property predicate = stmt.getPredicate(); 
-			RDFNode object = stmt.getObject(); 
 
-			resourceSet.add(subject);
+	public Set<Resource> getResources(Set<Resource> resourceSet, Model model){	
+		StmtIterator iter = model.listStatements();	
+		while (iter.hasNext()) {					
+			Statement stmt = iter.nextStatement(); // get next statement
+			Resource subject = stmt.getSubject(); // get the subject
+			Property predicate = stmt.getPredicate(); // get the predicate
+			RDFNode object = stmt.getObject(); // get the object
+
+			resourceSet.add(subject);	
 		}
 		return resourceSet;
 	}
 
 	/**
 	 * this method generates output file in ttl format
+	 * @param sentenceURI
+	 * @param relation
+	 * @param relatedEntities
+	 * @throws FileNotFoundException
 	 */
+
 	public void generateOutput(String sentenceURI, String relation, List<String> relatedEntities) throws FileNotFoundException{
 		Model model1 = ModelFactory.createDefaultModel();
 
@@ -134,6 +152,5 @@ public class RelationExtraction implements IRelationExtraction {
 	public static void main(String[] args) throws FileNotFoundException {
 		new  RelationExtraction().extractRelation("C:\\Users\\mmahajan\\Desktop\\Benchmarking\\input\\trainer.ttl");
 	}
-
 
 }
