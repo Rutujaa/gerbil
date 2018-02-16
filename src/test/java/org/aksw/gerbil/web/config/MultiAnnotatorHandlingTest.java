@@ -72,6 +72,8 @@ public class MultiAnnotatorHandlingTest {
         testConfigs.add(new Object[] { ExperimentType.ETyping, "http://testannotator.org/test&mode=ETyping" });
         testConfigs.add(new Object[] { ExperimentType.OKE_Task1, "http://testannotator.org/test&mode=OKE_Task1" });
         testConfigs.add(new Object[] { ExperimentType.OKE_Task2, null });
+        testConfigs.add(new Object[] { ExperimentType.KE, "http://testannotator.org/test&mode=KE" });
+        testConfigs.add(new Object[] { ExperimentType.RE, "http://testannotator.org/test&mode=RE" });
         return testConfigs;
     }
 
