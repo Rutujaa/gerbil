@@ -21,9 +21,9 @@ import org.aksw.gerbil.matching.Matching;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.hp.hpl.jena.rdf.model.Property;
-import com.hp.hpl.jena.rdf.model.Resource;
-import com.hp.hpl.jena.rdf.model.ResourceFactory;
+import org.apache.jena.rdf.model.Property;
+import org.apache.jena.rdf.model.Resource;
+import org.apache.jena.rdf.model.ResourceFactory;
 
 public class GERBIL {
 
@@ -58,10 +58,13 @@ public class GERBIL {
     public static final Resource RT2KB = resource("RT2KB");
     public static final Resource Sa2KB = resource("Sa2KB");
     public static final Resource Sc2KB = resource("Sc2KB");
+    public static final Resource RE = resource("RE");
+    public static final Resource OKE2018Task4 = resource("OKE2018Task4");
     public static final Resource OKE2015_Task1 = resource("OKE2015_Task1");
     public static final Resource OKE2015_Task2 = resource("OKE2015_Task2");
     public static final Resource ERec = resource("ERec");
     public static final Resource ETyping = resource("ETyping");
+    public static final Resource KE = resource("KE");
 
     public static final Resource StrongAnnoMatch = resource("StrongAnnoMatch");
     public static final Resource WeakAnnoMatch = resource("WeakAnnoMatch");
@@ -125,6 +128,12 @@ public class GERBIL {
             return ETyping;
         case RT2KB:
             return RT2KB;
+        case RE:
+        	return RE;
+        case OKE2018Task4:
+        	return OKE2018Task4;
+        case KE:
+        	return KE;
         }
         LOGGER.error("Got an unknown experiment type: " + type.name());
         return null;

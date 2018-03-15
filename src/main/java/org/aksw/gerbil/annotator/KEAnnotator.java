@@ -1,4 +1,5 @@
 /**
+/**
  * This file is part of General Entity Annotator Benchmark.
  *
  * General Entity Annotator Benchmark is free software: you can redistribute it and/or modify
@@ -14,21 +15,15 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with General Entity Annotator Benchmark.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.aksw.gerbil.semantic.sameas.impl.model;
+package org.aksw.gerbil.annotator;
 
-import org.apache.jena.rdf.model.Model;
+import java.util.List;
 
-public class RDFModelBasedSameAsRetriever extends AbstractRDFModelBasedSameAsRetriever {
+import org.aksw.gerbil.exceptions.GerbilException;
+import org.aksw.gerbil.transfer.nif.Document;
+import org.aksw.gerbil.transfer.nif.Meaning;
 
-    private Model model;
+public interface KEAnnotator extends OKETask1Annotator, REAnnotator {
 
-    public RDFModelBasedSameAsRetriever(Model model) {
-        this.model = model;
-    }
-
-    @Override
-    protected Model getModel(String uri) {
-        return model;
-    }
-
+    public List<Meaning> performKETask(Document document) throws GerbilException;
 }
