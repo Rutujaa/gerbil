@@ -21,10 +21,9 @@ import java.util.List;
 
 import org.aksw.gerbil.exceptions.GerbilException;
 import org.aksw.gerbil.transfer.nif.Document;
-import org.aksw.gerbil.transfer.nif.Marking;
+import org.aksw.gerbil.transfer.nif.data.TypedNamedEntity;
 
 public interface KEAnnotator extends OKETask1Annotator, REAnnotator {
 
-    public List<Marking> performKETask(Document document) throws GerbilException;
-
+    public List<TypedNamedEntity> performKETask(Document document) throws GerbilException;
 }
