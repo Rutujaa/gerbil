@@ -30,6 +30,7 @@ import org.aksw.gerbil.annotator.OKETask1Annotator;
 import org.aksw.gerbil.annotator.OKETask2Annotator;
 import org.aksw.gerbil.annotator.REAnnotator;
 import org.aksw.gerbil.annotator.RT2KBAnnotator;
+import org.aksw.gerbil.annotator.KEAnnotator;
 import org.aksw.gerbil.annotator.decorator.ErrorCountingAnnotatorDecorator;
 import org.aksw.gerbil.annotator.decorator.SingleInstanceSecuringAnnotatorDecorator;
 import org.aksw.gerbil.annotator.decorator.TimeMeasuringAnnotatorDecorator;
@@ -61,6 +62,7 @@ import org.aksw.gerbil.transfer.nif.MeaningSpan;
 import org.aksw.gerbil.transfer.nif.Relation;
 import org.aksw.gerbil.transfer.nif.Span;
 import org.aksw.gerbil.transfer.nif.TypedSpan;
+import org.aksw.gerbil.transfer.nif.Relation;
 import org.aksw.gerbil.transfer.nif.data.TypedNamedEntity;
 import org.aksw.simba.topicmodeling.concurrent.tasks.Task;
 import org.apache.commons.io.IOUtils;
@@ -237,6 +239,8 @@ public class ExperimentTask implements Task {
 			}
 		case RE:
 			return;
+		case KE:
+			return;
 		case ERec:// falls through
 		default:
 			// nothing to do
@@ -410,6 +414,7 @@ public class ExperimentTask implements Task {
 				List<List<Span>> results = new ArrayList<List<Span>>(dataset.size());
 				List<List<Span>> goldStandard = new ArrayList<List<Span>>(dataset.size());
 				EntityRecognizer recognizer = ((EntityRecognizer) annotator);
+        
 				for (Document document : dataset.getInstances()) {
 					// reduce the document to a single text
 					results.add(recognizer.performRecognition(DocumentInformationReducer.reduceToPlainText(document)));
@@ -432,7 +437,6 @@ public class ExperimentTask implements Task {
 				List<List<TypedSpan>> results = new ArrayList<List<TypedSpan>>(dataset.size());
 				List<List<TypedSpan>> goldStandard = new ArrayList<List<TypedSpan>>(dataset.size());
 				EntityTyper typer = ((EntityTyper) annotator);
-
 				for (Document document : dataset.getInstances()) {
 					// reduce the document to a text and a list of Spans
 					results.add(typer.performTyping(DocumentInformationReducer.reduceToTextAndSpans(document)));
@@ -455,6 +459,7 @@ public class ExperimentTask implements Task {
 				List<List<TypedSpan>> results = new ArrayList<List<TypedSpan>>(dataset.size());
 				List<List<TypedSpan>> goldStandard = new ArrayList<List<TypedSpan>>(dataset.size());
 				RT2KBAnnotator extractor = (RT2KBAnnotator) annotator;
+        
 				for (Document document : dataset.getInstances()) {
 					// reduce the document to a single text
 					results.add(extractor.performRT2KBTask(DocumentInformationReducer.reduceToPlainText(document)));
@@ -477,7 +482,7 @@ public class ExperimentTask implements Task {
 				List<List<TypedNamedEntity>> results = new ArrayList<List<TypedNamedEntity>>(dataset.size());
 				List<List<TypedNamedEntity>> goldStandard = new ArrayList<List<TypedNamedEntity>>(dataset.size());
 				OKETask1Annotator okeTask1Annotator = ((OKETask1Annotator) annotator);
-
+        
 				for (Document document : dataset.getInstances()) {
 					// reduce the document to a text and a list of Spans
 					results.add(
@@ -572,6 +577,31 @@ public class ExperimentTask implements Task {
 			}
 			break;
 		}
+
+		case KE: {
+            try {
+                List<List<Marking>> results = new ArrayList<List<Marking>>(dataset.size());
+                List<List<Marking>> goldStandard = new ArrayList<List<Marking>>(dataset.size());
+                KEAnnotator keAnnotator = ((KEAnnotator) annotator);
+                for (Document document : dataset.getInstances()) {
+                    results.add(keAnnotator.performKETask(DocumentInformationReducer.reduceToPlainText(document)));
+                    goldStandard.add(document.getMarkings(Marking.class));
+                    taskState.increaseExperimentStepCount();
+                }
+                if (annotatorOutputWriter != null) {
+                    annotatorOutputWriter.storeAnnotatorOutput(configuration, results, dataset.getInstances());
+                }
+                prepareRelations(results, globalRetriever);
+                prepareRelations(goldStandard, globalRetriever);
+                
+                evalResult = evaluate(evaluators, results, goldStandard);
+            } catch (GerbilException e) {
+                throw e;
+            } catch (Exception e) {
+                throw new GerbilException(e, ErrorTypes.UNEXPECTED_EXCEPTION);
+            }
+            break;
+        }
 		default:
 			throw new GerbilException("This experiment type isn't implemented yet. Sorry for this.",
 					ErrorTypes.UNEXPECTED_EXCEPTION);
