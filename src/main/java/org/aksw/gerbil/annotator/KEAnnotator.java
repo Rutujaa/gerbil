@@ -1,4 +1,5 @@
 /**
+/**
  * This file is part of General Entity Annotator Benchmark.
  *
  * General Entity Annotator Benchmark is free software: you can redistribute it and/or modify
@@ -17,13 +18,12 @@
 package org.aksw.gerbil.annotator;
 
 import java.util.List;
+
 import org.aksw.gerbil.exceptions.GerbilException;
 import org.aksw.gerbil.transfer.nif.Document;
-import org.aksw.gerbil.transfer.nif.Relation;
-import org.aksw.gerbil.transfer.nif.Span;
+import org.aksw.gerbil.transfer.nif.data.TypedNamedEntity;
 
-public interface REAnnotator extends Annotator {
+public interface KEAnnotator extends OKETask1Annotator, REAnnotator {
 
-    public List<Relation> performRETask(Document document) throws GerbilException;
-   
+    public List<TypedNamedEntity> performKETask(Document document) throws GerbilException;
 }

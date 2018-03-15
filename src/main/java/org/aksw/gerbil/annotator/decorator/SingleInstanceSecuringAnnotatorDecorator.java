@@ -32,6 +32,8 @@ import org.aksw.gerbil.annotator.OKETask1Annotator;
 import org.aksw.gerbil.annotator.OKETask2Annotator;
 import org.aksw.gerbil.annotator.REAnnotator;
 import org.aksw.gerbil.annotator.RT2KBAnnotator;
+import org.aksw.gerbil.annotator.REAnnotator;
+import org.aksw.gerbil.annotator.KEAnnotator;
 import org.aksw.gerbil.datatypes.ErrorTypes;
 import org.aksw.gerbil.datatypes.ExperimentType;
 import org.aksw.gerbil.exceptions.GerbilException;
@@ -543,4 +545,5 @@ public abstract class SingleInstanceSecuringAnnotatorDecorator extends AbstractA
 		public final Semaphore semaphore = new Semaphore(1);
 		public int usageCounter = 0;
 	}
+ 
 }

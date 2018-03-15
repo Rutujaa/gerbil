@@ -196,6 +196,10 @@ public enum ExperimentType implements Describable {
             case OKE_Task2: {
                 return false;
             }
+            case RE: {
+            	return false;
+            }
+            case KE:
             }
         }
         case Sc2KB: {
@@ -253,6 +257,10 @@ public enum ExperimentType implements Describable {
             case OKE_Task2: {
                 return false;
             }
+            case RE: {
+                return false;
+            }
+            case KE:
             }
         }
         case C2KB: {
@@ -290,6 +298,7 @@ public enum ExperimentType implements Describable {
         	case ERec:
         		return true;
         	}
+
         }
         }
         return false;
