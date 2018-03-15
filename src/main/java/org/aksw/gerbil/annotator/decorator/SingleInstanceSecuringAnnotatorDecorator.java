@@ -583,5 +583,7 @@ public abstract class SingleInstanceSecuringAnnotatorDecorator extends AbstractA
 	private static class RegistryValue {
 		public final Semaphore semaphore = new Semaphore(1);
 		public int usageCounter = 0;
+
 	}    
 }   
+

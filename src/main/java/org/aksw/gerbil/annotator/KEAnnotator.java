@@ -26,4 +26,5 @@ import org.aksw.gerbil.transfer.nif.Marking;
 public interface KEAnnotator extends OKETask1Annotator, REAnnotator {
 
     public List<Marking> performKETask(Document document) throws GerbilException;
+
 }

@@ -103,6 +103,10 @@ public abstract class ErrorCountingAnnotatorDecorator extends AbstractAnnotatorD
             break;
         case Sc2KB:
             break;
+        case RE:
+            return new ErrorCountingREAnnotator((REAnnotator) annotator, maxErrors);
+        case KE:
+            return new ErrorCountingKEAnnotator((KEAnnotator) annotator, maxErrors);
         default:
             break;
 
@@ -300,6 +304,7 @@ public abstract class ErrorCountingAnnotatorDecorator extends AbstractAnnotatorD
         }
         
         @Override
+
         public List<Relation> performRETask(Document document) throws GerbilException {
             return ErrorCountingAnnotatorDecorator.performRE(this, document);
         }

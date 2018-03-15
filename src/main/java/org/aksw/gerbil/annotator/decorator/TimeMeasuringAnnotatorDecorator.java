@@ -30,6 +30,8 @@ import org.aksw.gerbil.annotator.OKETask2Annotator;
 import org.aksw.gerbil.annotator.REAnnotator;
 import org.aksw.gerbil.annotator.KEAnnotator;
 import org.aksw.gerbil.annotator.RT2KBAnnotator;
+import org.aksw.gerbil.annotator.REAnnotator;
+import org.aksw.gerbil.annotator.KEAnnotator;
 import org.aksw.gerbil.datatypes.ExperimentType;
 import org.aksw.gerbil.evaluate.DoubleEvaluationResult;
 import org.aksw.gerbil.evaluate.EvaluationResultContainer;
@@ -426,4 +428,5 @@ public abstract class TimeMeasuringAnnotatorDecorator extends AbstractAnnotatorD
 			results.addResult(new DoubleEvaluationResult(AVG_TIME_RESULT_NAME, getAverageRuntime()));
 		}
 	}
+
 }
