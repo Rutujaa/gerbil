@@ -44,7 +44,6 @@ import org.aksw.gerbil.transfer.nif.MeaningSpan;
 import org.aksw.gerbil.transfer.nif.Relation;
 import org.aksw.gerbil.transfer.nif.Span;
 import org.aksw.gerbil.transfer.nif.TypedSpan;
-import org.aksw.gerbil.transfer.nif.Relation;
 import org.aksw.gerbil.transfer.nif.data.TypedNamedEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -87,8 +86,6 @@ public abstract class SingleInstanceSecuringAnnotatorDecorator extends AbstractA
 			return new SingleInstanceSecuringREAnnotator((REAnnotator) annotator);
 		case OKE2018Task4:
 			return new SingleInstanceSecuringOKE2018Task4Annotator((OKE2018Task4Annotator) annotator);
-		case KE:
-			return new SingleInstanceSecuringKEAnnotator((KEAnnotator) annotator);
 		case Rc2KB:
 			break;
 		case Sa2KB:
@@ -170,23 +167,6 @@ public abstract class SingleInstanceSecuringAnnotatorDecorator extends AbstractA
 			return SingleInstanceSecuringAnnotatorDecorator.performC2KB(this, document);
 		}
 	}
-  
-   private static class SingleInstanceSecuringKEAnnotator extends SingleInstanceSecuringOKETask1Annotator implements KEAnnotator {
-
-    	protected SingleInstanceSecuringKEAnnotator(KEAnnotator decoratedAnnotator) {
-    		super(decoratedAnnotator);
-    	}
-    	
-    	@Override
-        public List<Marking> performKETask(Document document) throws GerbilException {
-            return SingleInstanceSecuringAnnotatorDecorator.performKETask(this, document);
-        }
-    	
-    	@Override
-        public List<Relation> performRETask(Document document) throws GerbilException {
-            return SingleInstanceSecuringAnnotatorDecorator.performRE(this, document);
-        }
-    }
 
 	private static class SingleInstanceSecuringD2KBAnnotator extends SingleInstanceSecuringAnnotatorDecorator
 			implements D2KBAnnotator {
@@ -430,25 +410,6 @@ public abstract class SingleInstanceSecuringAnnotatorDecorator extends AbstractA
 		}
 		return result;
 	}
-  
-  
-	protected static List<Marking> performKETask(SingleInstanceSecuringAnnotatorDecorator decorator,
-            Document document) throws GerbilException {
-        List<Marking> result = null;
-        try {
-            decorator.semaphore.acquire();
-        } catch (InterruptedException e) {
-            LOGGER.error("Interrupted while waiting for the Annotator's semaphore.", e);
-            throw new GerbilException("Interrupted while waiting for the Annotator's semaphore.", e,
-                    ErrorTypes.UNEXPECTED_EXCEPTION);
-        }
-        try {
-            result = ((KEAnnotator) decorator.getDecoratedAnnotator()).performKETask(document);
-        } finally {
-            decorator.semaphore.release();
-        }
-        return result;
-    }
 
 	protected static List<TypedNamedEntity> performOKETask1(SingleInstanceSecuringAnnotatorDecorator decorator,
 			Document document) throws GerbilException {
@@ -583,7 +544,6 @@ public abstract class SingleInstanceSecuringAnnotatorDecorator extends AbstractA
 	private static class RegistryValue {
 		public final Semaphore semaphore = new Semaphore(1);
 		public int usageCounter = 0;
-
-	}    
-}   
-
+	}
+ 
+}

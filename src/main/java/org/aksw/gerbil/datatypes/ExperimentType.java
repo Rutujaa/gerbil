@@ -151,13 +151,8 @@ public enum ExperimentType implements Describable {
     /**
      * The annotator gets a text and shall recognize entities inside and the relationship between them.
      */
-    OKE2018Task4("OKE2018Task4", "The annotator gets a text and shall recognize entities inside and the relationship between them."),
-  
-     /**
-     * The annotator gets a text and shall recognize entities inside and their
-     * types along with the relations.
-     */
-    KE("KE", "The Annotator gets a text and shall recognize entities inside and their types along with their relations.");
+    OKE2018Task4("OKE2018Task4", "The annotator gets a text and shall recognize entities inside and the relationship between them.")
+    ;
 
     private String label;
     private String description;
@@ -190,10 +185,6 @@ public enum ExperimentType implements Describable {
             case A2KB:
             case D2KB:
             case ERec:
-            case RE: {
-            	return false;
-            }
-            case KE:
             case Sa2KB:
             case Sc2KB:
             case Rc2KB: {
@@ -219,8 +210,6 @@ public enum ExperimentType implements Describable {
             case D2KB:
             case ETyping:
             case RT2KB:
-            case RE:
-            case KE:
             case OKE_Task1:
             case OKE_Task2: {
                 return false;
@@ -241,8 +230,6 @@ public enum ExperimentType implements Describable {
             case D2KB:
             case RT2KB:
             case ETyping:
-            case RE:
-            case KE:
             case OKE_Task1:
             case OKE_Task2: {
                 return false;
@@ -260,10 +247,6 @@ public enum ExperimentType implements Describable {
             case RT2KB: {
                 return true;
             }
-            case RE: {
-                return false;
-            }
-            case KE:
             case C2KB: // falls through
             case A2KB:
             case D2KB:
@@ -315,27 +298,6 @@ public enum ExperimentType implements Describable {
         	case ERec:
         		return true;
         	}
-        }	
-        case KE:{
-            switch (type) {
-            case ERec: 
-            case ETyping:
-            case RT2KB: 
-            case C2KB: 
-            case A2KB:
-            case D2KB:
-            case OKE_Task1:
-            case OKE_Task2: {
-                return false;
-            }
-            case RE:
-            case KE: 
-            case Sa2KB:
-            case Sc2KB:
-            case Rc2KB:
-            default: { 
-            	return true; }
-            }
 
         }
         }
