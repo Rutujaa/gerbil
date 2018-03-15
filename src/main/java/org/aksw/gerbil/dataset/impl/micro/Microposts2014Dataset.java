@@ -100,12 +100,10 @@ public class Microposts2014Dataset extends AbstractDataset implements Initializa
                     markings = findMarkings(line, text);
                     documents.add(new DocumentImpl(text, documentUriPrefix + line[TWEET_ID_INDEX], markings));
                 } else {
-//                    throw new GerbilException(
-//                            "Dataset is malformed. Each line shoud have an even number of cells. Malformed line = "
-//                                    + Arrays.toString(line),
-//                            ErrorTypes.DATASET_LOADING_ERROR);
-                	//ignore line!
-                	LOGGER.debug("Each line should have an even number of cells. Ignoring this line "+Arrays.toString(line));
+                    throw new GerbilException(
+                            "Dataset is malformed. Each line shoud have an even number of cells. Malformed line = "
+                                    + Arrays.toString(line),
+                            ErrorTypes.DATASET_LOADING_ERROR);
                 }
 
                 line = reader.readNext();

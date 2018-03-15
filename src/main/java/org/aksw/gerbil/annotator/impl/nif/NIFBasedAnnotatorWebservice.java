@@ -21,7 +21,6 @@ import java.util.List;
 
 import org.aksw.gerbil.annotator.A2KBAnnotator;
 import org.aksw.gerbil.annotator.EntityTyper;
-import org.aksw.gerbil.annotator.OKE2018Task4Annotator;
 import org.aksw.gerbil.annotator.OKETask1Annotator;
 import org.aksw.gerbil.annotator.OKETask2Annotator;
 import org.aksw.gerbil.annotator.http.AbstractHttpBasedAnnotator;
@@ -33,7 +32,6 @@ import org.aksw.gerbil.transfer.nif.Meaning;
 import org.aksw.gerbil.transfer.nif.MeaningSpan;
 import org.aksw.gerbil.transfer.nif.NIFDocumentCreator;
 import org.aksw.gerbil.transfer.nif.NIFDocumentParser;
-import org.aksw.gerbil.transfer.nif.Relation;
 import org.aksw.gerbil.transfer.nif.Span;
 import org.aksw.gerbil.transfer.nif.TurtleNIFDocumentCreator;
 import org.aksw.gerbil.transfer.nif.TurtleNIFDocumentParser;
@@ -50,7 +48,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class NIFBasedAnnotatorWebservice extends AbstractHttpBasedAnnotator implements OKETask2Annotator,
-        OKETask1Annotator, A2KBAnnotator, EntityTyper, OKE2018Task4Annotator {
+        OKETask1Annotator, A2KBAnnotator, EntityTyper {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(NIFBasedAnnotatorWebservice.class);
 
@@ -168,17 +166,4 @@ public class NIFBasedAnnotatorWebservice extends AbstractHttpBasedAnnotator impl
     public String getUrl() {
         return url;
     }
-
-	@Override
-	public List<Relation> performRETask(Document document) throws GerbilException {
-        return performAnnotation(document, Relation.class);
-
-	}
-
-	@Override
-	public List<Marking> performOKE2018Task4(Document document) throws GerbilException {
-        return performAnnotation(document, Marking.class);
-
-	}
-
 }

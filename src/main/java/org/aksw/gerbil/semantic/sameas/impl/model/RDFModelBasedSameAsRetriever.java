@@ -16,7 +16,7 @@
  */
 package org.aksw.gerbil.semantic.sameas.impl.model;
 
-import org.apache.jena.rdf.model.Model;
+import com.hp.hpl.jena.rdf.model.Model;
 
 public class RDFModelBasedSameAsRetriever extends AbstractRDFModelBasedSameAsRetriever {
 

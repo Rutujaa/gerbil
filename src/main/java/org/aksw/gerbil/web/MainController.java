@@ -256,8 +256,6 @@ public class MainController {
         case OKE_Task2:
         case A2KB:
         case ERec:
-        case OKE2018Task4:
-        case RE:
         case RT2KB:
         case Sa2KB:
         case RE:
