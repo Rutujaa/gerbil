@@ -45,8 +45,8 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
 
-import org.apache.jena.vocabulary.OWL;
-import org.apache.jena.vocabulary.RDFS;
+import com.hp.hpl.jena.vocabulary.OWL;
+import com.hp.hpl.jena.vocabulary.RDFS;
 
 @RunWith(Parameterized.class)
 public class OKEChallengeTask2Test extends AbstractExperimentTaskTest {
