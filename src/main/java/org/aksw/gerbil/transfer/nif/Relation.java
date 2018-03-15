@@ -1,22 +1,10 @@
 package org.aksw.gerbil.transfer.nif;
 
-import java.util.List;
-import java.util.Set;
+import org.apache.jena.graph.Triple;
 
-
-/**
- * Implements a Relation Object 
- *
- */
 public interface Relation extends Marking {
 
-	public void setRelation(Meaning subject, Meaning predicate, Meaning object);
+    public void setRelation(Triple relation);
     
-    public List<Meaning> getRelation();
-    
-    public Meaning getSubject();
-    
-    public Meaning getPredicate();
-    
-    public Meaning getObject();
+    public Triple getRelation();
 }
