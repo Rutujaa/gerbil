@@ -17,12 +17,13 @@
 package org.aksw.gerbil.annotator;
 
 import java.util.List;
-
 import org.aksw.gerbil.exceptions.GerbilException;
 import org.aksw.gerbil.transfer.nif.Document;
+import org.aksw.gerbil.transfer.nif.Relation;
 import org.aksw.gerbil.transfer.nif.Span;
 
 public interface REAnnotator extends Annotator {
 
-    public List<Span> performRETask(Document document) throws GerbilException;
+    public List<Relation> performRETask(Document document) throws GerbilException;
+   
 }
