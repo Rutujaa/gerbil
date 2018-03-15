@@ -19,11 +19,9 @@ package org.aksw.gerbil.http;
 import java.util.concurrent.Semaphore;
 
 import org.aksw.gerbil.config.GerbilConfiguration;
-import org.apache.http.HttpHost;
 import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
-import org.apache.http.impl.conn.DefaultProxyRoutePlanner;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -35,8 +33,7 @@ public class HttpManagement {
 
     public static final String MAXIMUM_TIME_TO_WAIT_KEY = "org.aksw.gerbil.annotator.http.HttpManagement.maxWaitingTime";
     public static final String CHECK_INTERVAL_KEY = "org.aksw.gerbil.annotator.http.HttpManagement.checkInterval";
-    public static final String PROXY_HOST_KEY = "org.aksw.gerbil.annotator.http.HttpManagement.proxyHost";
-    public static final String PROXY_PORT_KEY = "org.aksw.gerbil.annotator.http.HttpManagement.proxyPort";
+
     /**
      * TODO move this list into the property files.
      */
@@ -51,7 +48,7 @@ public class HttpManagement {
 
     public static final long DEFAULT_WAITING_TIME = 60000;
     public static final long DEFAULT_CHECK_INTERVAL = 10000;
-    public static final int DEFAULT_PROXY_PORT = 8080;
+
     /**
      * The time the system should wait before sending a new request to a domain
      * that could block the system.
@@ -197,16 +194,6 @@ public class HttpManagement {
     public HttpClientBuilder generateHttpClientBuilder() {
         HttpClientBuilder builder = HttpClientBuilder.create();
         builder.setUserAgent(userAgent);
-
-        String proxyHost = GerbilConfiguration.getInstance().getString(PROXY_HOST_KEY);
-        int proxyPort = GerbilConfiguration.getInstance().getInt(PROXY_PORT_KEY, DEFAULT_PROXY_PORT);
-
-        if (proxyHost != null) {
-            HttpHost proxy = new HttpHost(proxyHost, proxyPort);
-            DefaultProxyRoutePlanner routePlanner = new DefaultProxyRoutePlanner(proxy);
-            builder.setRoutePlanner(routePlanner);
-        }
-
         return builder;
     }
 }

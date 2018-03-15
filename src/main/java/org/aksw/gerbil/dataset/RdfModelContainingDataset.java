@@ -16,7 +16,7 @@
  */
 package org.aksw.gerbil.dataset;
 
-import org.apache.jena.rdf.model.Model;
+import com.hp.hpl.jena.rdf.model.Model;
 
 public interface RdfModelContainingDataset extends Dataset {
 
